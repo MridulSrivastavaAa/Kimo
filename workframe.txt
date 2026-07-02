@@ -1,0 +1,38 @@
+kimo/
+│
+├── main.py                 # Entry point
+├── config.py               # Settings
+├── requirements.txt
+├── README.md
+│
+├── brain/
+│   ├── brain.py
+│   ├── llm.py
+│   ├── memory.py
+│   └── reasoning.py
+│
+├── speech/
+│   ├── listen.py
+│   ├── speak.py
+│   └── wakeword.py
+│
+├── commands/
+│   ├── system.py
+│   ├── browser.py
+│   ├── files.py
+│   └── apps.py
+│
+├── memory/
+│   ├── database.db
+│   └── conversations.json
+│
+├── gui/
+│   └── window.py
+│
+├── utils/
+│   ├── logger.py
+│   └── helpers.py
+│
+└── assets/
+    ├── sounds/
+    └── icons/
