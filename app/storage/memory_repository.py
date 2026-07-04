@@ -8,18 +8,40 @@ class MemoryRepository:
         self.db.initialize()
 
     def save_memory(self, memory_type: str, attribute: str, value: str):
-        query = """
-        INSERT INTO memories (memory_type, attribute, value)
+
+        # Purani memory delete karo
+        delete_query = """
+        DELETE FROM memories
+        WHERE attribute = ?
+        """
+
+        self.db.execute(delete_query, (attribute,))
+
+        # Nayi memory insert karo
+        insert_query = """
+        INSERT INTO memories (
+            memory_type,
+            attribute,
+            value
+        )
         VALUES (?, ?, ?)
         """
-        self.db.execute(query, (memory_type, attribute, value))
+
+        self.db.execute(
+            insert_query,
+            (
+                memory_type,
+                attribute,
+                value,
+            ),
+        )
 
     def get_memory(self, attribute: str):
+
         query = """
         SELECT memory_type, attribute, value
         FROM memories
         WHERE attribute = ?
-        ORDER BY id DESC
         LIMIT 1
         """
 
@@ -29,12 +51,13 @@ class MemoryRepository:
             return {
                 "memory_type": result[0],
                 "attribute": result[1],
-                "value": result[2]
+                "value": result[2],
             }
 
         return None
 
     def get_all_memories(self):
+
         query = """
         SELECT memory_type, attribute, value
         FROM memories
@@ -48,12 +71,13 @@ class MemoryRepository:
             memories.append({
                 "memory_type": row[0],
                 "attribute": row[1],
-                "value": row[2]
+                "value": row[2],
             })
 
         return memories
 
     def delete_memory(self, attribute: str):
+
         query = """
         DELETE FROM memories
         WHERE attribute = ?

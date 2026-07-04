@@ -21,8 +21,6 @@ def route(text: str) -> str:
     save_patterns = [
         "remember",
         "my name is",
-        "i am ",
-        "i'm ",
         "my birthday is",
         "i live in",
         "my favorite",
@@ -30,8 +28,15 @@ def route(text: str) -> str:
     ]
 
     for pattern in save_patterns:
-        if pattern in text:
+
+        if text.startswith(pattern):
             return "save_memory"
+
+    if text.startswith("i am "):
+        return "save_memory"
+
+    if text.startswith("i'm "):
+        return "save_memory"
 
     # -------- Default --------
 
