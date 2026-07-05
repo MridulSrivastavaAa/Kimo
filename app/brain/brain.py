@@ -13,6 +13,8 @@ class Brain:
         intent = route(prompt)
         print(f"Intent -> {intent}")
 
+        # -------- Save Memory --------
+
         if intent == "save_memory":
             success = self.memory.process_memory(prompt)
 
@@ -21,8 +23,17 @@ class Brain:
 
             return "Sorry, I couldn't save that."
 
+        # -------- Recall Memory --------
+
         elif intent == "recall_memory":
             return self.memory.recall_memory(prompt)
+
+        # -------- Forget Memory --------
+
+        elif intent == "forget_memory":
+            return self.memory.forget_memory(prompt)
+
+        # -------- Chat --------
 
         return ask_llm(prompt)
 
@@ -30,6 +41,8 @@ class Brain:
 
         intent = route(prompt)
         print(f"Intent -> {intent}")
+
+        # -------- Save Memory --------
 
         if intent == "save_memory":
             success = self.memory.process_memory(prompt)
@@ -41,8 +54,18 @@ class Brain:
 
             return
 
+        # -------- Recall Memory --------
+
         elif intent == "recall_memory":
             yield self.memory.recall_memory(prompt)
             return
+
+        # -------- Forget Memory --------
+
+        elif intent == "forget_memory":
+            yield self.memory.forget_memory(prompt)
+            return
+
+        # -------- Chat --------
 
         yield from stream_llm(prompt)

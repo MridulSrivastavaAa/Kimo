@@ -2,6 +2,21 @@ def route(text: str) -> str:
 
     text = text.lower().strip()
 
+    # -------- Forget Memory --------
+
+    forget_patterns = [
+        "forget",
+        "forget my",
+        "delete my",
+        "remove my",
+        "erase my",
+        "clear my",
+    ]
+
+    for pattern in forget_patterns:
+        if text.startswith(pattern):
+            return "forget_memory"
+
     # -------- Recall Memory --------
 
     recall_patterns = [
@@ -28,7 +43,6 @@ def route(text: str) -> str:
     ]
 
     for pattern in save_patterns:
-
         if text.startswith(pattern):
             return "save_memory"
 

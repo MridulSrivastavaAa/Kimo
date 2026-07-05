@@ -6,6 +6,8 @@ from app.memory.parser import parse_json
 
 def extract_memory(text: str, mode="save"):
 
+    # ---------------- SAVE ----------------
+
     if mode == "save":
 
         prompt = f"""
@@ -19,7 +21,8 @@ Rules:
 2. Do NOT write explanations.
 3. Do NOT use markdown.
 4. Do NOT use ```json.
-5. If no memory is found return:
+
+If no memory is found return:
 
 {{
     "memory_type": "",
@@ -49,13 +52,13 @@ Output:
     "value": "12 March"
 }}
 
-Now extract memory.
-
 Sentence:
 {text}
 """
 
-    else:
+    # ---------------- RECALL ----------------
+
+    elif mode == "recall":
 
         prompt = f"""
 You are an AI memory recall extractor.
@@ -106,6 +109,67 @@ Where do I live?
 Output:
 {{
     "attribute": "city"
+}}
+
+Sentence:
+{text}
+"""
+
+    # ---------------- FORGET ----------------
+
+    elif mode == "forget":
+
+        prompt = f"""
+You are an AI memory deletion extractor.
+
+Your task is to identify which memory attribute the user wants to forget.
+
+Return ONLY valid JSON.
+
+Rules:
+
+1. Return only JSON.
+2. No explanation.
+3. No markdown.
+
+If no attribute is found return:
+
+{{
+    "attribute": ""
+}}
+
+Examples:
+
+Input:
+Forget my favorite language.
+
+Output:
+{{
+    "attribute": "favorite_language"
+}}
+
+Input:
+Delete my birthday.
+
+Output:
+{{
+    "attribute": "birthday"
+}}
+
+Input:
+Remove my favorite fruit.
+
+Output:
+{{
+    "attribute": "favorite_fruit"
+}}
+
+Input:
+Erase my name.
+
+Output:
+{{
+    "attribute": "name"
 }}
 
 Sentence:

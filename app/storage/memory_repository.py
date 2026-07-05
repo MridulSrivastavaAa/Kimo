@@ -7,9 +7,11 @@ class MemoryRepository:
         self.db = Database()
         self.db.initialize()
 
+    # ---------------- SAVE MEMORY ----------------
+
     def save_memory(self, memory_type: str, attribute: str, value: str):
 
-        # Purani memory delete karo
+        # Same attribute ki purani memory delete karo
         delete_query = """
         DELETE FROM memories
         WHERE attribute = ?
@@ -36,12 +38,15 @@ class MemoryRepository:
             ),
         )
 
+    # ---------------- GET MEMORY ----------------
+
     def get_memory(self, attribute: str):
 
         query = """
         SELECT memory_type, attribute, value
         FROM memories
         WHERE attribute = ?
+        ORDER BY id DESC
         LIMIT 1
         """
 
@@ -56,11 +61,14 @@ class MemoryRepository:
 
         return None
 
+    # ---------------- GET ALL MEMORIES ----------------
+
     def get_all_memories(self):
 
         query = """
         SELECT memory_type, attribute, value
         FROM memories
+        ORDER BY attribute
         """
 
         results = self.db.fetchall(query)
@@ -75,6 +83,8 @@ class MemoryRepository:
             })
 
         return memories
+
+    # ---------------- DELETE MEMORY ----------------
 
     def delete_memory(self, attribute: str):
 
